@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "684909970433",
+    "firebase_url": "https://nutritious-7ee3f.firebaseio.com",
+    "project_id": "nutritious-7ee3f",
+    "storage_bucket": "nutritious-7ee3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684909970433:android:a6ee23471bf0ceac60ac00",
+        "android_client_info": {
+          "package_name": "com.nutritious"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684909970433-3ii20bcu4ott3uusggdbvjpd8veibtdv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUmFOAEXhY9D5XKvfX1mArw0o0kLvat_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684909970433-3ii20bcu4ott3uusggdbvjpd8veibtdv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
