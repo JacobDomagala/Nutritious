@@ -18,35 +18,52 @@
                 android:layout_height="match_parent">
 
     <com.nutritious.camera.AutoFitTextureView
-            android:id="@+id/texture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"/>
+        android:id="@+id/texture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="-1dp"
+        android:clickable="false" />
 
     <RelativeLayout
-            android:id="@+id/control"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/frame_height"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="@color/control_background"
-            android:padding="8dp">
+        android:id="@+id/control"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/frame_height"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ic_launcher_background"
+        android:padding="8dp">
 
         <TextView
-                android:id="@+id/tv_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_centerVertical="true"/>
+            android:id="@+id/tv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center" />
 
         <TextView
-                android:id="@+id/tv_confidence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_below="@id/tv_item"
-        />
+            android:id="@+id/tv_confidence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_item"
+            android:gravity="center" />
+
+<!--        <Button-->
+<!--            android:id="@+id/TakePhoto"-->
+<!--            android:layout_width="109dp"-->
+<!--            android:layout_height="104dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginStart="145dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="145dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/ic_take_photo"-->
+<!--            android:backgroundTint="#7C7777" />-->
 
     </RelativeLayout>
 
