@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nutritious.camera
+package com.google.tflite.imageclassification.sample.camera
 
 import android.content.Context
 import android.util.AttributeSet
@@ -24,9 +24,9 @@ import android.view.TextureView
  * A [TextureView] that can be adjusted to a specified aspect ratio.
  */
 class AutoFitTextureView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyle: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
 ) : TextureView(context, attrs, defStyle) {
 
     private var ratioWidth = 0
