@@ -112,15 +112,16 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
 
         for (i in labelList.indices) {
             val confidence = labelProbArray[0][i]
+            Log.e("CLASSIFIER confidence value:", "" + confidence)
             if (confidence >= threshHold) {
-                Log.d("confidence value:", "" + confidence)
+                Log.e(" CLASSIFIER confidence value:", "" + confidence)
                 pq.add(Recognition("" + i,
                         if (labelList.size > i) labelList[i] else "Unknown",
-                        ((confidence).toFloat() / 255.0f)
+                        confidence
                 ))
             }
         }
-        Log.e("Classifier", "pqsize:(%d)".format(pq.size))
+        Log.e("CLASSIFIER", "pqsize:(%d)".format(pq.size))
 
         val recognitions = ArrayList<Recognition>()
         val recognitionsSize = min(pq.size, maxResult)
