@@ -54,8 +54,8 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
 
     private var rgbBytes: IntArray? = null
     private lateinit var previewReader: ImageReader
-    private val mInputSize = 224
-    private val mModelPath = "mobilenet_v1_1.0_224_quant.tflite"
+    private val mInputSize = 128//224
+    private val mModelPath = "converted_model.tflite"
     private val mLabelPath = "labels_mobilenet_quant_v1_224.txt"
     private var rgbFrameBitmap: Bitmap? = null
     private lateinit var takePictureButton : AppCompatImageButton
@@ -1068,7 +1068,7 @@ class Camera2BasicFragment : Fragment(), View.OnClickListener,
                             previewSize.height
                     )
                     val results = rgbFrameBitmap?.let { it1 -> classifier.recognizeImage(it1) }
-                    Log.d("results", results.toString())
+                    Log.d("CLASSIFIER results", results.toString())
                     activity?.runOnUiThread {
                         itemNameTextView.text = (results?.get(0)?.title)
                         confidenceTextView.text = (String.format("%.2f", (results?.get(0)?.confidence?.times(100))) + "%")

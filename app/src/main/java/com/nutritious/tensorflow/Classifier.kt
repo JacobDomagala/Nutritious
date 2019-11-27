@@ -20,6 +20,8 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
     private val pixelSize: Int = 3
     private val maxResult = 3
     private val threshHold = 0.4f
+    private val IMAGE_MEAN = 128
+    private val IMAGE_STD  = 128.0f
 
     data class Recognition(
             var id: String = "",
@@ -32,6 +34,7 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
     }
 
     init {
+        Log.e("CLASSIFIER", "INIT")
         val tfliteOptions = Interpreter.Options()
         tfliteOptions.setNumThreads(5)
         tfliteOptions.setUseNNAPI(true)
@@ -40,6 +43,7 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
     }
 
     private fun loadModelFile(assetManager: AssetManager, modelPath: String): MappedByteBuffer {
+        Log.e("CLASSIFIER", "loadModelFile %s".format(modelPath))
         val fileDescriptor = assetManager.openFd(modelPath)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel = inputStream.channel
@@ -54,25 +58,29 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
     }
 
     fun recognizeImage(bitmap: Bitmap): List<Recognition> {
+        Log.e("CLASSIFIER", "recognizeImage")
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, inputSize, inputSize, false)
         val byteBuffer = convertBitmapToByteBuffer(scaledBitmap)
-        val result = Array(1) { ByteArray(labelList.size) }
+        val result = Array(1) { FloatArray(labelList.size) }
+        Log.e("CLASSIFIER", "recognizeImage interpreter %d".format(result[0].size))
         interpreter.run(byteBuffer, result)
+        Log.e("CLASSIFIER", "recognizeImage return" )
         return getSortedResult(result)
     }
 
 
     private fun addPixelValue(byteBuffer: ByteBuffer, intValue: Int): ByteBuffer {
-
-        byteBuffer.put((intValue.shr(16) and 0xFF).toByte())
-        byteBuffer.put((intValue.shr(8) and 0xFF).toByte())
-        byteBuffer.put((intValue and 0xFF).toByte())
+        Log.e("CLASSIFIER", "addPixelValue")
+        byteBuffer.putFloat(((intValue.shr(16) and 0xFF)-IMAGE_MEAN)/IMAGE_STD)
+        byteBuffer.putFloat(((intValue.shr(8) and 0xFF)-IMAGE_MEAN)/IMAGE_STD)
+        byteBuffer.putFloat(((intValue and 0xFF)-IMAGE_MEAN)/IMAGE_STD)
         return byteBuffer
     }
 
     /** Writes Image data into a `ByteBuffer`.  */
     private fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
-        val imgData = ByteBuffer.allocateDirect(inputSize * inputSize * pixelSize)
+        Log.e("CLASSIFIER", "convertBitmapToByteBuffer")
+        val imgData = ByteBuffer.allocateDirect(4*inputSize * inputSize * pixelSize)
         imgData.order(ByteOrder.nativeOrder())
         val intValues = IntArray(inputSize * inputSize)
 
@@ -92,8 +100,8 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
     }
 
 
-    private fun getSortedResult(labelProbArray: Array<ByteArray>): List<Recognition> {
-        Log.d("Classifier", "List Size:(%d, %d, %d)".format(labelProbArray.size, labelProbArray[0].size, labelList.size))
+    private fun getSortedResult(labelProbArray: Array<FloatArray>): List<Recognition> {
+        Log.e("CLASSIFIER", "getSortedResult List Size:(%d, %d, %d)".format(labelProbArray.size, labelProbArray[0].size, labelList.size))
 
         val pq = PriorityQueue(
                 maxResult,
@@ -112,7 +120,7 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
                 ))
             }
         }
-        Log.d("Classifier", "pqsize:(%d)".format(pq.size))
+        Log.e("Classifier", "pqsize:(%d)".format(pq.size))
 
         val recognitions = ArrayList<Recognition>()
         val recognitionsSize = min(pq.size, maxResult)
